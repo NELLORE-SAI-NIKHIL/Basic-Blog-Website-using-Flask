@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}  
+
+
+{% for message in get_flashed_messages() %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+{% endfor %}
+
+{% if username %}
+	<div id="container">
+		<div id="content" >
+			<div id="about">
+				<h5> Hello {{ username }} !!! </h5>
+			</div>
+		</div>
+	</div>
+
+    <br/><br/><br/>
+{% for our_user in our_users %}
+    {{ our_user.id }} - <a href="{{ url_for('update', id=our_user.id)}}">{{ our_user.username }}</a> - {{ our_user.email }} -
+    <a href="{{ url_for('delete', id=our_user.id)}}">Delete</a>
+    <br/>
+{% endfor %}
+
+
+{% else %}
+<div id="container">
+	<div id="content" >
+		<div id="about">
+			<h2> Register Here </h2>			
+			<br/>
+            <div class="shadow-lg p-3 mb-5 bg-body rounded">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+    
+                    {{ form.username.label(class="form-label") }}
+    
+                    {{ form.username(class="form-control") }}
+                    <br/>
+    
+                    {{ form.email.label(class="form-label") }}
+    
+                    {{ form.email(class="form-control") }}
+                    <br/>
+
+                    {{ form.password_hash.label(class="form-label") }}
+    
+                    {{ form.password_hash(class="form-control") }}
+                    <br/>
+
+                    {{ form.password_hash2.label(class="form-label") }}
+    
+                    {{ form.password_hash2(class="form-control") }}
+                    <br/>
+    
+                    {{ form.submit(class="btn btn-success") }}
+                </form>
+            </div>			            
+		</div>
+	</div>
+</div>
+<br/><br/><br/>
+{% for our_user in our_users %}
+    {{ our_user.id }} - <a href="{{ url_for('update', id=our_user.id)}}">{{ our_user.username }}</a> - {{ our_user.email }} -
+    <a href="{{ url_for('delete', id=our_user.id)}}">Delete</a>
+    <br/>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

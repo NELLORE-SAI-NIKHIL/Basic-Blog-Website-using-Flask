@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+{% endfor %}
+
+{% if email %}
+	<div id="container">
+		<div id="content" >
+			<div id="about">
+				<h5>  I found this info: </h5> 
+                Name: {{pw_to_check.username}}
+                Email: {{pw_to_check.email}}
+                PW: {{pw_to_check.password_hash}}
+                Passed: {{passed}}
+			</div>
+		</div>
+	</div>
+{% else %}
+<div id="container">
+	<div id="content" >
+		<div id="about">
+			<h2> Enter the Details </h2>			
+			<br/>
+			<form method="POST">
+				{{ form.hidden_tag() }}
+
+				{{ form.email.label(class="form-label") }}
+
+				{{ form.email(class="form-control") }}
+				<br/>
+
+                {{ form.password_hash.label(class="form-label") }}
+
+				{{ form.password_hash(class="form-control") }}
+				<br/>
+
+				{{ form.submit(class="btn btn-success") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

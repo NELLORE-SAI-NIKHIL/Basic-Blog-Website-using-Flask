@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+	
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  {{ message }}
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+	
+{% endfor %}
+
+{% if id == current_user.id %}
+
+	<h1>Update Profile</h1>
+	<br/>
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <div class="card">
+        <h5 class="card-header"> {{ current_user.username }} </h5>
+        <div class="card-body">
+            <h5 class="card-title">Details:</h5>
+            <p class="card-text" style="position: relative; padding-left: 70px;">
+                <form action="/update/{{ name_to_update.id }}" method="POST">
+                    {{ form.hidden_tag() }}
+                    
+            
+                    <strong>{{ form.username.label(class="form-label") }}</strong>
+            
+                    {{ form.username(class="form-control", value=name_to_update.username) }}
+                    <br/>
+            
+                    <strong>{{ form.email.label(class="form-label") }}</strong>
+            
+                    {{ form.email(class="form-control", value=name_to_update.email) }}
+                    <br/>
+                    
+                    <strong>{{ form.about_user.label(class="form-label") }}</strong>
+            
+                    <textarea name="about_user" class="form-control">{{ name_to_update.about_user }}</textarea>
+                    <br/>
+
+                    <p>Click on "Submit" to Update.</p>   
+                    <p>Click on "Delete" to delete the current user details.</p><br/>
+                    
+                        
+                    {{ form.submit(class="btn btn-success") }}
+            
+                    <a href="{{ url_for('delete', id=id)}}" class="btn btn-danger">Delete</a>
+                </form>         
+            </p>            
+        </div>
+    </div>
+</div>
+<br/><br/><br/>
+
+{% else %}
+ <div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  Sorry! You Can't Edit This User...
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+	<h2>Access Denied!</h2>
+	<p>Sorry, you cannot access this user profile...</p>
+
+{% endif %}
+
+
+{% endblock %}

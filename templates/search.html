@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}  
+
+    <br/>
+    <h2>Search Results</h2>
+    
+    {% for post in posts %}
+
+    <div id="container">
+        <div id="content" >
+            <div id="about">
+                			
+                <br/>                
+                <div class="shadow-lg p-3 mb-5 bg-body rounded", style="position: relative;">
+                        
+                    {% if current_user.id == post.poster.id %}
+                        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger btn-sm" style="position: absolute; top: 10px; right: 10px;">Delete Post</a>
+                    {% endif %}                    
+                    
+                    <h5>{{ post.title }}</h5><br/>
+                    <small>{{ post.author }}<br/>
+                    
+                    {{ post.date_posted }}<br/>
+                    {{ post.content }}<br/></small>
+                    <br/>
+
+                    <div style="display: flex; justify-content: space-between;">
+                        {% if current_user.id == post.poster.id %}
+                            <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-warning">Edit Post</a>                        
+                            <a href="{{ url_for('posts') }}" class="btn btn-outline-primary">Go Back</a>
+                        {% else %}
+                            <a href="{{ url_for('posts') }}" class="btn btn-outline-primary">Go Back</a>
+                        {% endif %}                        
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
